@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: neo4j-deployment
+  labels: apps:neo4j
+spec:
+  replicas: 1
+  selector:
+    matchLabels: null
+    apps: neo4j
+  template:
+    metadata:
+      labels:
+        app: neo4j
+    spec:
+      containers:
+        name: neo4j
+        image: neo4j:4.4.29
+        env:
+          - NEO4J_AUTH = "NEO4J_AUTH"
+        resources:
+          requests: null
+          llmits: null
+        ports:
+          - name: http
+            conatinerPort: 7474
+            protocol: TCP
+          - name: bolt
+            containerPort: TCP
