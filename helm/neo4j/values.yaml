@@ -8,7 +8,6 @@ image:
 
 service:
   type: LoadBalancer
-  port: 7474
   ports:
     http: 7474
     bolt: 7687
@@ -27,3 +26,8 @@ hpa:
 
 autoscaling:
   enabled: false
+
+auth:
+  username: neo4j
+  password: ChangeMe123!
+advertisedAddress: ""
