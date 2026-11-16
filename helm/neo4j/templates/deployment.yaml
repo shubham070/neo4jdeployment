@@ -42,8 +42,18 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.service.ports.http }}
               protocol: TCP
+            - name: bolt
+              containerPort: {{ .Values.service.ports.bolt }}
+              protocol: TCP
+          env:
+            - name: NEO4J_AUTH
+              value: {{ printf "%s/%s" .Values.auth.username .Values.auth.password | quote }}
+            {{- with .Values.advertisedAddress }}
+            - name: NEO4J_dbms_connector_bolt_advertised__address
+              value: {{ printf "%s:%v" . $.Values.service.ports.bolt | quote }}
+            {{- end }}
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
