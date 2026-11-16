@@ -8,6 +8,7 @@ image:
 
 service:
   type: LoadBalancer
+  port: 7474
   ports:
     http: 7474
     bolt: 7687
