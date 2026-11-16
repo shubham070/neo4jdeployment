@@ -1,0 +1,33 @@
+name: Deploy Helm Chart
+
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: unbuntu-latest
+    steps: 
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Set up Kubeconfig
+        uses: azure/k8-set-context@v1
+        with:
+          version: 'latest'
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: 'latest'
+      - name: Deploy with Helm
+        run: |
+          helm upgrade --install my-release ./charts/my-chart \
+            --namespace my-namespace \
+            --values ./charts/my-chart/values.yaml \
+            --set image repository=${{ secrets.IMAGE_REPO }} \
+            --set image.tag=${{ github.sha }} \
+            --wait \
+            --timeout 5m
