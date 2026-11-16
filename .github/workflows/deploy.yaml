@@ -25,14 +25,10 @@ jobs:
           version: latest
 
       - name: Deploy with Helm
-        env:
-          IMAGE_REPO: ${{ secrets.IMAGE_REPO }}
         run: |
           helm upgrade --install my-release ./helm/neo4j \
             --namespace my-namespace \
             --create-namespace \
             --values ./helm/neo4j/values.yaml \
-            --set-string image.repository="$IMAGE_REPO" \
-            --set-string image.tag="${{ github.sha }}" \
             --wait \
             --timeout 5m
