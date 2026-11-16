@@ -1,20 +1,29 @@
 ---
+replicaCount: 1
+
 image:
   repository: neo4j
   tag: 4.4.29
+  pullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
+  port: 7474
   ports:
     http: 7474
     bolt: 7687
+
 serviceAccount:
   create: true
+
 ingress:
   enabled: false
+
 httpRoute:
   enabled: false
+
 hpa:
   enabled: false
+
 autoscaling:
   enabled: false
