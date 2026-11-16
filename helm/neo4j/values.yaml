@@ -27,11 +27,3 @@ hpa:
 
 autoscaling:
   enabled: false
-
-auth:
-  enabled: true
-  existingSecret:
-    name: my-neo4j-secret
-    key: neo4j-password
-properties:
-  dbms.default_database: neo4j
