@@ -7,9 +7,13 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
+    - port: {{ .Values.service.ports.http }}
       targetPort: http
       protocol: TCP
       name: http
+    - port: {{ .Values.service.ports.bolt }}
+      targetPort: bolt
+      protocol: TCP
+      name: bolt
   selector:
     {{- include "neo4j.selectorLabels" . | nindent 4 }}
